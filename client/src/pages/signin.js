@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {toast} from 'react-hot-toast'
+import {toast} from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../store/authSlice';
 
 function SignInPage() {
   const [data, setData] = useState({
     email: '',
     password: '',
   });
+  
+  const dispatch = useDispatch();
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
@@ -23,7 +27,6 @@ function SignInPage() {
   const handleSubmit = async(event) => {
     event.preventDefault();
     const{email, password} = data;
-    
     try {
       const userData = await axios.post('/login',{
         email, password
@@ -31,13 +34,17 @@ function SignInPage() {
       if(userData.error){
         toast.error(userData.error)
       }else{
-        console.log(userData);
-        setData({
-          email: '',
-          password: '',
-        });
-        window.localStorage.setItem("loggedIn",true);
-        navigate('/profile');
+        if(userData.data.error){
+          toast.error(userData.data.error)
+        }else{
+          setData({
+            email: '',
+            password: '',
+          });
+          console.log(userData);
+          dispatch(authActions.login());
+          navigate('/profile')
+      }
       }
     } catch (error) {
       console.log(error);
@@ -45,7 +52,7 @@ function SignInPage() {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-12">
       <div className="w-full max-w-md p-6 bg-purple-200 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4">Sign In</h2>
         <form onSubmit={handleSubmit}>
@@ -81,7 +88,10 @@ function SignInPage() {
           >
             Sign In
           </button>
+          <div className='flex justify-center space-x-6'>
           <p className="block text-center text-sm font-medium text-gray-700">New user?<button className='ml-1 text-purple-700' onClick={()=>navigate('/signup')}>Sign Up</button></p>
+          <p className="block text-center text-sm font-medium text-gray-700">Forgot Password?<button className='ml-1 text-purple-700' onClick={()=>navigate('/forgot-password')}>Click Here</button></p>
+          </div>
         </form>
       </div>
     </div>

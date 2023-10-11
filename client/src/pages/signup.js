@@ -41,7 +41,7 @@ function SignUpPage() {
         toast.error(data.error)
       }else{
         setData({});
-        navigate('/verification',{state:email});
+        navigate('/verification',{state:{email:email,password:password,}});
         toast.success('Verification Email sent! Check your Email.');
       }
     } catch (error) {
@@ -49,7 +49,7 @@ function SignUpPage() {
     }
   };
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-8">
       <div className="w-full max-w-md p-6 bg-purple-200 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
         <form onSubmit={handleSubmit}>

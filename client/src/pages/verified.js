@@ -1,13 +1,12 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function Verified() {
   const [data, setData] = useState({});
-
+  const {userId, uniqueString} = useParams();
   useEffect(() => {
     const verify = async () => {
-      const userId = window.location.pathname.split("/")[2];
-      const uniqueString = window.location.pathname.split("/")[3];
       try {
         const result = await axios.get(`/verify/${userId}/${uniqueString}`);
         setData(result.data);
@@ -18,7 +17,7 @@ function Verified() {
     };
 
     verify();
-  }, []);
+  }, [userId, uniqueString]);
 
   return (
     <div>
