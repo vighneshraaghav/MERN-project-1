@@ -10,13 +10,13 @@ function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
   return (
-    <div className="bg-purple-300 px-2 py-4">
+    <div className="px-2 py-4">
       <div className="flex flex-col sm:flex-row">
-        <p className="p-1 text-center m-auto">The Conference 2023</p>
+        <p className="p-1 text-white text-center m-auto">The Conference 2023</p>
         <div className="flex mx-11 flex-wrap lg:space-x-20 justify-center sm:justify-start gap-2">
           <Elements name="Home" link="/" />
           <Elements name="Announcements" link="/announcements" />
-          <Elements name="Programme" />
+          <Elements name="Programme" link="/programme" />
           <Elements name="Speakers" />
           {isLoggedIn ? (
             <UserProfile />
@@ -42,14 +42,14 @@ function Header() {
     };
 
     return (
-      <div className="menu pt-2 relative">
+      <div className="pt-2 relative">
         <button onClick={toggleMenu}>
-          <img className="w-5" src={usericon} alt="usericon" />
+          <img className="w-5 bg-white rounded-2xl" src={usericon} alt="usericon" />
         </button>
         <div
           className={`lg:flex absolute ${
-            isMenuOpen ? "block px-2 py-4" : "hidden"
-          } bg-purple-200 border shadow-md`}
+            isMenuOpen ? "block px-2" : "hidden"
+          } bg-white rounded border shadow-md`}
         >
           {isMenuOpen && (
             <div className="lg:flex lg:flex-col">
@@ -72,7 +72,7 @@ function Header() {
         onClick={() => {
           navigate(props.link);
         }}
-        className="hover:bg-purple-300 p-1 rounded-md text-center m-auto"
+        className="hover:bg-white hover:text-black text-white p-1 rounded-md text-center m-auto"
       >
         {props.name}
       </button>

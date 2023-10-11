@@ -35,10 +35,10 @@ function Profile() {
 function User(props) {
   const user = props.user;
   return (
-    <div className="rounded-xl bg-purple-300 p-2 m-2">
-      <h1 className="rounded-xl bg-white p-2 m-2">Welcome {user.name}</h1>
-      <h1 className="rounded-xl bg-white p-2 m-2">
-        This is your mail ID : {user.email}
+    <div className="rounded-xl p-2 m-2">
+      <h1 className="rounded-xl text-white p-2 m-2">Welcome {user.name}</h1>
+      <h1 className="rounded-xl text-white p-2 m-2">
+        Registered mail ID : {user.email}
       </h1>
     </div>
   );
@@ -63,19 +63,23 @@ function Admin(props) {
 
   return (
     <div>
-      <div className="rounded-xl bg-purple-300 p-2 m-2">
-        <h1 className="rounded-xl bg-white p-2 m-2">Admin Profile</h1>
-        <h1 className="rounded-xl bg-white p-2 m-2">
-          Welcome user {user.name}
+      <div className="rounded-xl mx-20 p-2 m-2">
+        <h1 className="rounded-xl text-white p-2 m-2">
+          Welcome Admin {user.name}
         </h1>
-        <h1 className="rounded-xl bg-white p-2 m-2">
-          This is your mail ID : {user.email}
+        <h1 className="rounded-xl text-white p-2 m-2">
+          Your mail ID : {user.email}
         </h1>
       </div>
-      <div className="rounded-xl bg-purple-300 p-2 m-2">
+      <div className="rounded-xl border backdrop-blur p-2 mx-24">
+        <div className="grid grid-cols-2">
+          <h1 className="rounded-xl underline text-white p-2 m-2">Name</h1>
+          <h1 className="rounded-xl underline text-white p-2 m-2">Registered Email</h1>
+        </div>
         {users.map((member) => (
-          <div>
-            <h1 className="rounded-xl bg-white p-2 m-2">{member.name}</h1>
+          <div className="grid grid-cols-2">
+            <h1 className="rounded-xl text-white p-2 m-2">{member.name}</h1>
+            <h1 className="rounded-xl text-white p-2 m-2">{member.email}</h1>
           </div>
         ))}
       </div>

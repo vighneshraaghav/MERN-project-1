@@ -4,6 +4,7 @@ import Header from "./components/header";
 import SignInPage from "./pages/signin";
 import SignUpPage from "./pages/signup";
 import Announcement from "./pages/announcement";
+import Programme from "./pages/programme";
 import Profile from "./pages/Profile";
 import Home from "./pages/home";
 import axios from "axios";
@@ -20,15 +21,20 @@ axios.defaults.baseURL = "http://localhost:5050";
 axios.defaults.withCredentials = true;
 
 function App() {
+  const containerStyle = {
+    backgroundImage: `url(${background})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+  };
   return (
-    <div>
-      <div className="h-screen bg-purple-300">
+      <div className="h-screen bg-fixed overflow-y-scroll bg-purple-300" style={containerStyle}>
         <UserContextProvider>
           <Header />
           <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="announcements" element={<Announcement />} />
+            <Route path="programme" element={<Programme />} />
             <Route element={<ProtectedRoutes />}>
               <Route path="profile" element={<Profile />} />
               <Route
@@ -48,8 +54,6 @@ function App() {
           </Routes>
         </UserContextProvider>
       </div>
-      <img className="mt-[-100rem]" src={background} alt="bg" />
-    </div>
   );
 }
 

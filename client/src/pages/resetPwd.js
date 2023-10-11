@@ -35,14 +35,14 @@ function ResetPwd() {
   };
 
   return (
-    <div className="flex justify-center pt-12">
-      <div className="w-full max-w-md p-6 bg-purple-200 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Reset Password</h2>
+    <div className="flex mt-8 justify-center pt-12">
+      <div className="w-full max-w-md p-6 border backdrop-blur rounded-lg shadow-md">
+        <h2 className="text-2xl text-blue-300 font-semibold mb-4">Reset Password</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               New Password
             </label>
@@ -51,13 +51,13 @@ function ResetPwd() {
               id="password"
               value={password}
               onChange={handlePasswordChange}
-              className="mt-1 p-2 w-full bg-purple-50 border rounded-md focus:ring focus:outline-none focus:ring-purple-300"
+              className="mt-1 p-2 w-full bg-transparent border text-white rounded-md focus:outline-none"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full mb-4 bg-purple-500 text-white p-2 rounded-md hover:bg-purple-600 focus:outline-none focus:ring focus:ring-purple-300"
+            className="w-full mb-4 bg-transparent text-white p-2 mt-6 rounded-md hover:bg-blue-300 hover:text-black focus:outline-none focus:ring border"
           >
             Reset
           </button>

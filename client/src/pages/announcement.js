@@ -2,8 +2,9 @@ import React from 'react'
 
 function Announcement() {
   return (
-    <div className='flex justify-center bg-purple-300'>
-      <div className='text-center text-3xl '>Announcement</div>
+    <div className='ml-8 p-4'>
+      <h1 className='pb-2 text-white text-5xl '>Announcements :</h1>
+      <h2 className='p-4 text-white text-xl'>There are no announcements yet..!</h2>
     </div>
   )
 }

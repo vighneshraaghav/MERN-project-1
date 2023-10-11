@@ -50,11 +50,11 @@ function SignUpPage() {
   };
   return (
     <div className="flex justify-center pt-8">
-      <div className="w-full max-w-md p-6 bg-purple-200 rounded-lg shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
+      <div className="w-full max-w-md p-6 border backdrop-blur rounded-lg shadow-md">
+        <h2 className="text-2xl text-blue-300 font-semibold mb-4">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-white">
               Username
             </label>
             <input
@@ -62,12 +62,12 @@ function SignUpPage() {
               id="name"
               value={data.name}
               onChange={handleUsernameChange}
-              className="mt-1 p-2 w-full border rounded-md focus:ring focus:outline-none focus:ring-purple-300"
+              className="mt-1 p-2 w-full bg-transparent border text-white rounded-md focus:outline-none"
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-white">
               Email
             </label>
             <input
@@ -75,7 +75,7 @@ function SignUpPage() {
               id="email"
               value={data.email}
               onChange={handleEmailChange}
-              className="mt-1 p-2 w-full border rounded-md focus:ring focus:outline-none focus:ring-purple-300"
+              className="mt-1 p-2 w-full bg-transparent border text-white rounded-md focus:outline-none"
               required
             />
             {!isValid && (
@@ -83,7 +83,7 @@ function SignUpPage() {
           )}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-white">
               Password
             </label>
             <input
@@ -91,17 +91,17 @@ function SignUpPage() {
               id="password"
               value={data.password}
               onChange={handlePasswordChange}
-              className="mt-1 p-2 w-full border rounded-md focus:ring focus:outline-none focus:ring-purple-300"
+              className="mt-1 p-2 w-full bg-transparent border text-white rounded-md focus:outline-none"
               required
             />
           </div>
           <button
             type='submit'
-            className="w-full mb-4 bg-purple-500 text-white p-2 rounded-md hover:bg-purple-600 focus:outline-none focus:ring focus:ring-purple-300"
+            className="w-full mb-4 bg-transparent text-white p-2 mt-6 rounded-md hover:bg-blue-300 hover:text-black focus:outline-none focus:ring border"
           >
             Sign Up
           </button>
-          <p className="block text-center text-sm font-medium text-gray-700">Already a user?<button className='ml-1 text-purple-700' onClick={()=>navigate('/signin')}>Sign In</button></p>
+          <p className="block text-center text-sm font-medium text-white">Already a user?<button className='ml-1 text-blue-300' onClick={()=>navigate('/signin')}>Sign In</button></p>
         </form>
       </div>
     </div>
