@@ -106,14 +106,14 @@ const registerUser = async (req, res) => {
 
 //send verification email
 const sendVerificationEmail = ({ _id, email }, res) => {
-  const currentUrl = "http://localhost:3000/";
+  const currentUrl = "https://theconference2023.onrender.com";
   const uniqueString = uuidv4() + _id;
   let mailOptions = {
     from: process.env.AUTH_EMAIL,
     to: email,
     subject: "Email verification",
     html: `<p>Verify your email address to complete the signup and login into your account.</p><p>This link <b>expires in 6 hours</b>.</p><p>Press <a href=${
-      currentUrl + "verifyUser/" + _id + "/" + uniqueString
+      currentUrl + "/verifyUser/" + _id + "/" + uniqueString
     }>here</a> to proceed.</p>`,
   };
 
@@ -403,7 +403,7 @@ const forgotPassword = async (req, res) => {
           from: process.env.AUTH_EMAIL,
           to: email,
           subject: "Reset Password",
-          text: `http://localhost:3000/reset-password/${user._id}/${token}`,
+          text: `https://theconference2023.onrender.com/reset-password/${user._id}/${token}`,
         };
 
         transporter.sendMail(mailOptions);
