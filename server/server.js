@@ -11,7 +11,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 app.use('/',require('./routes/authRoutes'))
 app.use(cors({
-  origin: ["https://deploy-mern-1whq.vercel.app"],
+  origin: ["https://mern-project-1-api.vercel.app/"],
   methods:["POST","GET"],
   credentials: true
 }))
