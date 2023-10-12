@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "http://localhost:5050",
+  "proxy": "https://confoweb-backend-api.onrender.com",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
