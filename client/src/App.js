@@ -17,7 +17,7 @@ import ForgotPwd from "./pages/forgotPwd";
 import ResetPwd from "./pages/resetPwd";
 import background from "./images/bg.jpg";
 
-axios.defaults.baseURL = "http://localhost:5050";
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.defaults.withCredentials = true;
 
 function App() {
