@@ -161,6 +161,12 @@ const sendVerificationEmail = ({ _id, email }, res) => {
     });
 };
 
+const hello = (req,res) =>{
+  res.json({
+    message:"WORKING"
+  });
+}
+
 const verifyEmail = async (req, res) => {
   let { userId, uniqueString } = req.params;
 
@@ -452,6 +458,7 @@ const logout = (req, res) => {
 };
 
 module.exports = {
+  hello,
   read,
   registerUser,
   loginUser,

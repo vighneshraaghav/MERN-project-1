@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const cors = require("cors");
 const {
+  hello,
   read,
   registerUser,
   loginUser,
@@ -21,7 +22,7 @@ router.use(
     origin: "http://localhost:3000",
   })
 );
-
+router.get("/",hello);
 router.get("/users", read);
 router.get("/specificUser/:_id", specificUser);
 router.post("/register", registerUser);
