@@ -10,11 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 app.use('/',require('./routes/authRoutes'))
-app.use(cors({
-  origin: ["https://mern-project-1-api.vercel.app/"],
-  methods:["POST","GET"],
-  credentials: true
-}))
+app.use(cors());
 mongoose
   .connect(
     process.env.MONGO_URI
