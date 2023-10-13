@@ -28,7 +28,7 @@ function Profile() {
       }
     }
   } else {
-    return <p>Loading</p>;
+    return <p className="text-xl text-center text-white p-2 m-2">Loading</p>;
   }
 }
 
