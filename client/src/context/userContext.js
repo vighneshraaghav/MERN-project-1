@@ -16,7 +16,7 @@ export function UserContextProvider({ children }) {
         });
       }
     } else {
-      setUser(null);
+      setUser({hi:"hi"});
     }
   }, [isLoggedIn, user]); // Include 'user' as a dependency
 
