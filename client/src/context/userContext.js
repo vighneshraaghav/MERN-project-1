@@ -19,6 +19,7 @@ export function UserContextProvider({ children }) {
         setUser(null);
       }
     }
+    console.log("check");
     getContext();
   }, [isLoggedIn]); // Include 'user' as a dependency
 
