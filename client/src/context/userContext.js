@@ -15,7 +15,7 @@ export function UserContextProvider({ children }) {
           setUser(data);
         });
     }
-  }, [isLoggedIn, user]); // Include 'user' as a dependency
+  }, [isLoggedIn]); // Include 'user' as a dependency
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
