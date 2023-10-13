@@ -13,7 +13,8 @@ export function UserContextProvider({ children }) {
       if (isLoggedIn) {
           await axios.get('/profile').then(({ data }) => {
             setUser(data);
-          }).then(()=>console.log(data)).catch(err => console.log(err));
+            console.log(data);
+          }).then(()=>console.log("done")).catch(err => console.log(err));
       }else{
         console.log("fail uh");
         setUser(null);
