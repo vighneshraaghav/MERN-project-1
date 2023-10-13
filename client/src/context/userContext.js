@@ -11,7 +11,7 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const getContext = async() => {
       if (isLoggedIn) {
-          await axios.get('/profile').then(({ data }) => {
+          await axios.get('/profile').then((data) => {
             setUser(data);
             console.log(data);
           }).then(()=>console.log("done")).catch(err => console.log(err));
