@@ -9,6 +9,7 @@ export function UserContextProvider({ children }) {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   useEffect(() => {
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       if (!user) {
         axios.get('/profile').then(({ data }) => {
