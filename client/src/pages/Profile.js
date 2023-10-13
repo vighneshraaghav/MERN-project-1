@@ -7,6 +7,7 @@ function Profile() {
   const [role, setRole] = useState(null);
   useEffect(() => {
     if (user) {
+      console.log(user);
       const getUser = async () => {
         await axios
           .get(`/specificUser/${user.email}`)
