@@ -4,10 +4,10 @@ import axios from "axios";
 
 function Profile() {
   const { user } = useContext(UserContext);
+  console.log(user);
   const [role, setRole] = useState(null);
   useEffect(() => {
     if (user) {
-      console.log(user);
       const getUser = async () => {
         await axios
           .get(`/specificUser/${user.email}`)
