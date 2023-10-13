@@ -15,6 +15,7 @@ export function UserContextProvider({ children }) {
             setUser(data);
           }).then(()=>console.log("Done")).catch(err => console.log(err));
       }else{
+        console.log("fail uh");
         setUser(null);
       }
     }
