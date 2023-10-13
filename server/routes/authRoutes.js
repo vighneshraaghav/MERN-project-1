@@ -19,7 +19,7 @@ const {
 router.use(
   cors({
     credentials: true,
-    origin: process.env.FRONT_URL,
+    origin: "https://theconference2023.onrender.com",
   })
 );
 router.get("/",hello);
