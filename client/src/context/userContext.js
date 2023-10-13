@@ -10,14 +10,10 @@ export function UserContextProvider({ children }) {
 
   useEffect(() => {
     console.log(isLoggedIn);
-    if (isLoggedIn) {
-      if (!user) {
+    if (isLoggedIn && !user) {
         axios.get('/profile').then(({ data }) => {
           setUser(data);
         });
-      }
-    } else {
-      setUser({hi:"hi"});
     }
   }, [isLoggedIn, user]); // Include 'user' as a dependency
 
