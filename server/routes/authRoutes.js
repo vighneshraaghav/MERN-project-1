@@ -21,13 +21,6 @@ const {
 const redisClient = createClient();
 redisClient.connect().catch(console.error);
 
-const redisStore = new RedisStore({
-  client: redisClient,
-  prefix: "prefix:",
-  host: process.env.BACK_URL,
-  port: process.env.PORT, 
-});
-
 //middleware
 router.use(
   cors({
@@ -38,7 +31,12 @@ router.use(
 
 router.use(
   session({
-    store: redisStore,
+    store: new RedisStore({
+    client: redisClient,
+    prefix: "prefix:",
+    host: process.env.BACK_URL,
+    port: process.env.PORT, 
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
