@@ -19,14 +19,14 @@ const {
 } = require("../controllers/authController");
 
 const redisClient = createClient(
-  { 
-  host: 'redis-10964.c9.us-east-1-2.ec2.cloud.redislabs.com',
-  port: 10964,
-  password: process.env.REDIS_PWD,
-  tls: {
-    servername: 'redis-10964.c9.us-east-1-2.ec2.cloud.redislabs.com',
-  },
-}
+  {
+    username: 'default',
+    password: process.env.REDIS_PWD,
+    socket: {
+        host: 'redis-10964.c9.us-east-1-2.ec2.cloud.redislabs.com',
+        port: 10964,
+    }
+  }
 );
 redisClient.connect().catch(console.error);
 
