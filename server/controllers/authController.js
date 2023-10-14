@@ -352,15 +352,14 @@ const loginUser = async (req, res) => {
 
 const getProfile = (req, res) => {
   const { token } = req.cookies;
-  res.json(token);
-  // if (token) {
-  //   jwt.verify(token, process.env.JWT_SECRET, {}, (err, user) => {
-  //     if (err) throw err;
-  //     res.json(token);
-  //   });
-  // } else {
-  //   res.json(null);
-  // }
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, {}, (err, user) => {
+      if (err) throw err;
+      res.json(token);
+    });
+  } else {
+    res.json(null);
+  }
 };
 
 const specificUser = async (req, res) => {
