@@ -307,46 +307,47 @@ const loginUser = async (req, res) => {
         process.env.JWT_SECRET,
         {},
         (err, token) => {
-          if (err) throw err;
+          if (err) {
+            console.error(err); // Handle the error appropriately
+            return res.status(500).json({ error: 'JWT signing error' });
+          }
           res.cookie("token", token).json({ admin: true });
         }
       );
     } else {
-      //user exists?
       const user = await userModel.findOne({ email });
       if (!user) {
         return res.json({
           error: "No user found",
         });
+      } else if (!user.verified) {
+        res.json({
+          status: "FAILED",
+          message: "Email not verified!",
+        });
       } else {
-        //check whether user verified
-        if (!user.verified) {
-          res.json({
-            status: "FAILED",
-            message: "Email not verified!",
-          });
-        } else {
-          //password match?
-          const match = await comparePassword(password, user.password);
-          if (match) {
-            jwt.sign(
-              { email: user.email, id: user._id, name: user.name },
-              process.env.JWT_SECRET,
-              {},
-              (err, token) => {
-                if (err) throw err;
-                res.cookie("token", token).json(user);
+        const match = await comparePassword(password, user.password);
+        if (match) {
+          jwt.sign(
+            { email: user.email, id: user._id, name: user.name },
+            process.env.JWT_SECRET,
+            {},
+            (err, token) => {
+              if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'JWT signing error' });
               }
-            ).catch((err)=>res.error("idhu",err));
-          }
-          if (!match) {
-            res.json({ error: "Passwords do not match" });
-          }
+              res.cookie("token", token).json(user);
+            }
+          );
+        } else {
+          res.json({ error: "Passwords do not match" });
         }
       }
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
