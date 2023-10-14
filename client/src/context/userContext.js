@@ -13,6 +13,7 @@ export function UserContextProvider({ children }) {
       if (isLoggedIn) {
         try {
           const response = await axios.get('/profile');
+          console.log(response);
           setUser(response.data);
         } catch (err) {
           console.error(err);
