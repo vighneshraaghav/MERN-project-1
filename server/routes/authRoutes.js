@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const session = require("express-session");
+const RedisStore = require('connect-redis')(session);
 const cors = require("cors");
 const {
   hello,
@@ -26,6 +27,10 @@ router.use(
 
 router.use(
   session({
+    store: new RedisStore({
+      host: process.env.BACK_URL,
+      port: process.env.PORT, 
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,

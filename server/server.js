@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require('dotenv').config();
 const mongoose = require("mongoose");
 const app = express();
-const PORT = 5050
+const PORT = process.env.PORT
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
