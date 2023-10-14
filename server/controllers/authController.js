@@ -320,7 +320,7 @@ const loginUser = async (req, res) => {
         if (match) {
           // Create a session for the authenticated user
           req.session.user = user;
-          res.json(user);
+          res.json(req.session.user);
         } else {
           res.json({ error: "Passwords do not match" });
         }
@@ -338,7 +338,7 @@ const getProfile = (req, res) => {
     res.json(req.session.user);
   } else {
     // If no session exists, send a response indicating that the user is not logged in
-    res.json(null);
+    res.json({hi:"hi"});
   }
 };
 
