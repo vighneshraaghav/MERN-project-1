@@ -337,7 +337,7 @@ const loginUser = async (req, res) => {
                 if (err) throw err;
                 res.cookie("token", token).json(user);
               }
-            ).catch((err)=>res.error("idhu",err);
+            ).catch((err)=>res.error("idhu",err));
           }
           if (!match) {
             res.json({ error: "Passwords do not match" });
