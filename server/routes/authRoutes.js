@@ -34,8 +34,8 @@ router.use(
     store: new RedisStore({
     client: redisClient,
     prefix: "prefix:",
-    host: process.env.BACK_URL,
-    port: process.env.PORT, 
+    host: 127.0.0.1,
+    port: 6379, 
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
