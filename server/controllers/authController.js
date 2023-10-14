@@ -301,7 +301,9 @@ const loginUser = async (req, res) => {
     ) {
       // Create a session for the super admin
       req.session.isAdmin = true;
-      res.json({ admin: true });
+      req.session.save(() => {
+        res.json({ admin: true });
+      });
     } else {
       // Check if a user with the provided email exists
       const user = await userModel.findOne({ email });
@@ -320,14 +322,16 @@ const loginUser = async (req, res) => {
         if (match) {
           // Create a session for the authenticated user
           req.session.user = user;
-          res.json(req.session.user);
+          req.session.save(() => {
+            res.json(req.session.user);
+          });
         } else {
           res.json({ error: "Passwords do not match" });
         }
       }
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
