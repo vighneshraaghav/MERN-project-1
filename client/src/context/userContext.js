@@ -6,24 +6,23 @@ export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
-    const getContext = async() => {
+    const getContext = async () => {
       if (isLoggedIn) {
-          await axios.get('/profile').then(({data}) => {
-            setUser(data);
-            console.log(data);
-          }).then(()=>console.log("done")).catch(err => console.log(err));
-      }else{
-        console.log("fail uh");
+        try {
+          const response = await axios.get('/profile');
+          setUser(response.data);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
         setUser(null);
       }
-    }
-    console.log("check");
-    console.log(isLoggedIn);
+    };
     getContext();
-  }, [isLoggedIn]); // Include 'user' as a dependency
+  }, [isLoggedIn]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
