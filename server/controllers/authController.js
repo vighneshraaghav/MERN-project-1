@@ -9,9 +9,6 @@ const { hashPassword, comparePassword } = require("../crypt/auth");
 //path
 const path = require("path");
 
-//jwt
-const jwt = require("jsonwebtoken");
-
 //email handling
 const nodeMailer = require("nodemailer");
 
@@ -302,19 +299,11 @@ const loginUser = async (req, res) => {
       email == process.env.SUPER_ADMIN &&
       password == process.env.SUPER_PASS
     ) {
-      jwt.sign(
-        { email: process.env.SUPER_ADMIN, name: process.env.SUPER_NAME },
-        process.env.JWT_SECRET,
-        {},
-        (err, token) => {
-          if (err) {
-            console.error(err); // Handle the error appropriately
-            return res.status(500).json({ error: 'JWT signing error' });
-          }
-          res.cookie("token", token).json({ admin: true });
-        }
-      );
+      // Create a session for the super admin
+      req.session.isAdmin = true;
+      res.json({ admin: true });
     } else {
+      // Check if a user with the provided email exists
       const user = await userModel.findOne({ email });
       if (!user) {
         return res.json({
@@ -326,39 +315,29 @@ const loginUser = async (req, res) => {
           message: "Email not verified!",
         });
       } else {
+        // Compare the provided password with the stored password hash
         const match = await comparePassword(password, user.password);
         if (match) {
-          jwt.sign(
-            { email: user.email, id: user._id, name: user.name },
-            process.env.JWT_SECRET,
-            {},
-            (err, token) => {
-              if (err) {
-                console.error(err);
-                return res.status(500).json({ error: 'JWT signing error' });
-              }
-              res.cookie("token", token).json(user);
-            }
-          );
+          // Create a session for the authenticated user
+          req.session.user = user;
+          res.json(user);
         } else {
           res.json({ error: "Passwords do not match" });
         }
       }
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
 
 const getProfile = (req, res) => {
-  const { token } = req.cookies;
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, {}, (err, user) => {
-      if (err) throw err;
-      res.json(token);
-    });
+  if (req.session.user) {
+    // If the user is logged in (session exists), send their profile data
+    res.json(req.session.user);
   } else {
+    // If no session exists, send a response indicating that the user is not logged in
     res.json(null);
   }
 };
@@ -448,13 +427,20 @@ const read = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res
-    .cookie("token", null, {
-      expires: new Date(Date.now()),
-    })
-    .json({
+  // Destroy the session to log the user out
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Logout failed" });
+    }
+
+    // Clear the session cookie
+    res.clearCookie("connect.sid");
+
+    res.json({
       message: "Logged out successfully",
     });
+  });
 };
 
 module.exports = {

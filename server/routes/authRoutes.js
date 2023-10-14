@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const session = require("express-session");
 const cors = require("cors");
 const {
   hello,
@@ -22,6 +23,15 @@ router.use(
     origin: process.env.FRONT_URL,
   })
 );
+
+router.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
 router.get("/",hello);
 router.get("/users", read);
 router.get("/specificUser/:_id", specificUser);
