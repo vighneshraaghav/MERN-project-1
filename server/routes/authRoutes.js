@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const RedisStore = require('connect-redis');
 const session = require("express-session");
-const RedisStore = require('connect-redis')(session);
+const { createClient } = require('redis');
 const cors = require("cors");
 const {
   hello,
@@ -17,6 +18,16 @@ const {
   resetPassword,
 } = require("../controllers/authController");
 
+const redisClient = createClient();
+redisClient.connect().catch(console.error);
+
+const redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "prefix:",
+  host: process.env.BACK_URL,
+  port: process.env.PORT, 
+});
+
 //middleware
 router.use(
   cors({
@@ -27,10 +38,7 @@ router.use(
 
 router.use(
   session({
-    store: new RedisStore({
-      host: process.env.BACK_URL,
-      port: process.env.PORT, 
-    }),
+    store: redisStore,
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
