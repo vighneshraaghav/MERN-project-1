@@ -31,7 +31,7 @@ router.use(
 
 router.use(
   session({
-    store: new RedisStore({
+    store: RedisStore({
     client: redisClient,
     prefix: "prefix:",
     host: process.env.BACK_URL,
