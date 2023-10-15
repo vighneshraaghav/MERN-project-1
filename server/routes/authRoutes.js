@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const session = require("express-session");
 const redis = require('redis');
-const connectRedis = require('connect-redis');
-const RedisStore = connectRedis(session);
+const RedisStore = require('connect-redis').default;
 const { createClient } = require('redis');
 const cors = require("cors");
 const {
