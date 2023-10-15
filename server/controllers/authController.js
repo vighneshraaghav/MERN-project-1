@@ -300,7 +300,7 @@ const loginUser = async (req, res) => {
       password == process.env.SUPER_PASS
     ) {
       // Create a session for the super admin
-      req.session.user = {userType:"admin"};
+      req.session.user = {email:email,userType:"admin"};
       req.session.save(() => {
         req.session.reload(()=>{
           res.json(req.session.isAdmin);
