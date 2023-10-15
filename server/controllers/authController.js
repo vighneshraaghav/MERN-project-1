@@ -303,7 +303,7 @@ const loginUser = async (req, res) => {
       req.session.isAdmin = true;
       req.session.save(() => {
         req.session.reload(()=>{
-          res.json({ admin: true });
+          res.json(req.session.isAdmin);
         })
       });
     } else {
