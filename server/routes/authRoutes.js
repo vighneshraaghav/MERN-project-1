@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const session = require("express-session");
-const RedisStore = require('connect-redis').default;
+const redis = require('redis');
+const connectRedis = require('connect-redis');
+const RedisStore = connectRedis(session);
 const { createClient } = require('redis');
 const cors = require("cors");
 const {
@@ -18,7 +20,7 @@ const {
   resetPassword,
 } = require("../controllers/authController");
 
-const redisClient = createClient(
+const redisClient = redis.createClient(
   {
     username: 'default',
     password: process.env.REDIS_PWD,
@@ -45,7 +47,7 @@ router.use(
     prefix: "prefix:",
     }),
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   })
 );
