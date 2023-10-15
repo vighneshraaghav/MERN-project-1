@@ -3,7 +3,6 @@ const router = express.Router();
 const session = require("express-session");
 const redis = require('redis');
 const RedisStore = require('connect-redis').default;
-const { createClient } = require('redis');
 const cors = require("cors");
 const {
   hello,

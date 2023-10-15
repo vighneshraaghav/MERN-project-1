@@ -109,7 +109,7 @@ const sendVerificationEmail = ({ _id, email }, res) => {
     to: email,
     subject: "Email verification",
     html: `<p>Verify your email address to complete the signup and login into your account.</p><p>This link <b>expires in 6 hours</b>.</p><p>Press <a href=${
-      process.env.BACK_URL + "/verifyUser/" + _id + "/" + uniqueString
+      process.env.FRONT_URL + "/verifyUser/" + _id + "/" + uniqueString
     }>here</a> to proceed.</p>`,
   };
 
@@ -314,9 +314,8 @@ const loginUser = async (req, res) => {
           error: "No user found",
         });
       } else if (!user.verified) {
-        res.json({
-          status: "FAILED",
-          message: "Email not verified!",
+        return res.json({
+          error: "Email not verified!",
         });
       } else {
         // Compare the provided password with the stored password hash

@@ -23,37 +23,37 @@ axios.defaults.withCredentials = true;
 function App() {
   const containerStyle = {
     backgroundImage: `url(${background})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center center',
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
   };
   return (
-      <div className="h-screen bg-fixed overflow-y-scroll bg-purple-300" style={containerStyle}>
-        <UserContextProvider>
-          <Header />
-          <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="announcements" element={<Announcement />} />
-            <Route path="programme" element={<Programme />} />
-            <Route element={<ProtectedRoutes />}>
-              <Route path="profile" element={<Profile />} />
-              <Route
-                path="/verifyUser/:userId/:uniqueString"
-                element={<Verified />}
-              />
-              <Route path="verification" element={<Verification />} />
-            </Route>
-            <Route path="signin" element={<SignInPage />} />
-            <Route path="signup" element={<SignUpPage />} />
-            <Route path="forgot-password" element={<ForgotPwd/>}/>
-            <Route
-                path="/reset-password/:id/:token"
-                element={<ResetPwd />}
-              />
-            <Route path="*" element={<p>404 Not found</p>} />
-          </Routes>
-        </UserContextProvider>
-      </div>
+    <div
+      className="h-screen bg-fixed overflow-y-scroll bg-purple-300"
+      style={containerStyle}
+    >
+      <UserContextProvider>
+        <Header />
+        <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="announcements" element={<Announcement />} />
+          <Route path="programme" element={<Programme />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="profile" element={<Profile />} />
+          </Route>
+          <Route
+            path="/verifyUser/:userId/:uniqueString"
+            element={<Verified />}
+          />
+          <Route path="verification" element={<Verification />} />
+          <Route path="signin" element={<SignInPage />} />
+          <Route path="signup" element={<SignUpPage />} />
+          <Route path="forgot-password" element={<ForgotPwd />} />
+          <Route path="/reset-password/:id/:token" element={<ResetPwd />} />
+          <Route path="*" element={<p>404 Not found</p>} />
+        </Routes>
+      </UserContextProvider>
+    </div>
   );
 }
 
