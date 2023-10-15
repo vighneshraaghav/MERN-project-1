@@ -6,7 +6,8 @@ const PORT = process.env.PORT
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
-app.use('/',require('./routes/authRoutes'))
+app.use('/',require('./routes/authRoutes'));
+app.set('trust proxy', 1);
 mongoose
   .connect(
     process.env.MONGO_URI
