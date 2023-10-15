@@ -337,7 +337,7 @@ const loginUser = async (req, res) => {
 };
 
 const getProfile = (req, res) => {
-  res.json(req.session.user);
+  res.json(req.session);
   // if (req.session.user) {
   //   // If the user is logged in (session exists), send their profile data
   //   res.json(req.session.user);
