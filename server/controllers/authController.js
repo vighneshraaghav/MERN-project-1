@@ -337,14 +337,13 @@ const loginUser = async (req, res) => {
 };
 
 const getProfile = (req, res) => {
-  res.json(req.session);
-  // if (req.session.user) {
-  //   // If the user is logged in (session exists), send their profile data
-  //   res.json(req.session.user);
-  // } else {
-  //   // If no session exists, send a response indicating that the user is not logged in
-  //   res.json({hi:"hi"});
-  // }
+  if (req.session.user) {
+    // If the user is logged in (session exists), send their profile data
+    res.json(req.session.user);
+  } else {
+    // If no session exists, send a response indicating that the user is not logged in
+    res.json({hi:"hi"});
+  }
 };
 
 const specificUser = async (req, res) => {

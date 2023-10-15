@@ -22,6 +22,7 @@
     "googleapis": "^126.0.1",
     "mongoose": "^7.4.3",
     "nodemailer": "^6.9.4",
+    "redis": "^4.6.10",
     "server": "^1.0.38",
     "uuid": "^9.0.0"
   },
