@@ -46,9 +46,13 @@ router.use(
     prefix: "prefix:",
     }),
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: true }
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true,
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            sameSite: 'none',
+            },
   })
 );
 
