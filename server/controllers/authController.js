@@ -323,7 +323,9 @@ const loginUser = async (req, res) => {
           // Create a session for the authenticated user
           req.session.user = user;
           req.session.save(() => {
-            res.json(req.session.user);
+            req.session.reload(()=>{
+              res.json(req.session.user);
+            })
           });
         } else {
           res.json({ error: "Passwords do not match" });
@@ -337,13 +339,15 @@ const loginUser = async (req, res) => {
 };
 
 const getProfile = (req, res) => {
-  if (req.session.user) {
+  req.session.reload(()=>{
+    if (req.session.user) {
     // If the user is logged in (session exists), send their profile data
     res.json(req.session.user);
   } else {
     // If no session exists, send a response indicating that the user is not logged in
     res.json({hi:"hi"});
   }
+  });
 };
 
 const specificUser = async (req, res) => {
