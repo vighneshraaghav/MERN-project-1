@@ -302,7 +302,9 @@ const loginUser = async (req, res) => {
       // Create a session for the super admin
       req.session.isAdmin = true;
       req.session.save(() => {
-        res.json({ admin: true });
+        req.session.reload(()=>{
+          res.json({ admin: true });
+        })
       });
     } else {
       // Check if a user with the provided email exists
