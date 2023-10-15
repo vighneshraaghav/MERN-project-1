@@ -39,6 +39,7 @@ router.use(
   })
 );
 
+router.set('trust proxy', 1);
 router.use(
   session({
     store: new RedisStore({
