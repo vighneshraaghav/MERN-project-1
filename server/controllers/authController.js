@@ -378,13 +378,13 @@ const forgotPassword = async (req, res) => {
           error: "User not found",
         });
       } else {
-        req.session.reload(()=>{
+        req.session.reload(() => {
           req.session.user = {
             resetPasswordToken: resetToken,
             resetPasswordExpires: resetExpiration,
           };
           req.session.save();
-        })
+        });
         const resetLink = `${process.env.FRONT_URL}/reset-password/${user._id}/${resetToken}`;
 
         let mailOptions = {
@@ -431,10 +431,10 @@ const resetPassword = async (req, res) => {
       if (err) {
         return res.json({ Status: err });
       }
-      delete req.session.user.resetPasswordToken;
-      delete req.session.user.resetPasswordExpires;
-      req.session.save(() => {
-        req.session.reload(req.session.user);
+      req.session.reload(() => {
+        delete req.session.user.resetPasswordToken;
+        delete req.session.user.resetPasswordExpires;
+        req.session.save();
       });
 
       res.json({ Status: "Success" });
