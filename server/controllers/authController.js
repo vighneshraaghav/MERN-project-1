@@ -157,11 +157,11 @@ const sendVerificationEmail = ({ _id, email }, res) => {
     });
 };
 
-const hello = (req,res) =>{
+const hello = (req, res) => {
   res.json({
-    message:"WORKING"
+    message: "WORKING",
   });
-}
+};
 
 const verifyEmail = async (req, res) => {
   let { userId, uniqueString } = req.params;
@@ -288,8 +288,6 @@ const verifiedPage = async (req, res) => {
         error: err,
       });
     });
-
-  // res.sendFile(path.join(__dirname, "./../../client/src/verified"));
 };
 
 const loginUser = async (req, res) => {
@@ -299,15 +297,13 @@ const loginUser = async (req, res) => {
       email == process.env.SUPER_ADMIN &&
       password == process.env.SUPER_PASS
     ) {
-      // Create a session for the super admin
-      req.session.user = {email:email,userType:"admin"};
+      req.session.user = { email: email, userType: "admin" };
       req.session.save(() => {
-        req.session.reload(()=>{
-          res.json(req.session.isAdmin);
-        })
+        req.session.reload(() => {
+          res.json(req.session.user);
+        });
       });
     } else {
-      // Check if a user with the provided email exists
       const user = await userModel.findOne({ email });
       if (!user) {
         return res.json({
@@ -318,15 +314,13 @@ const loginUser = async (req, res) => {
           error: "Email not verified!",
         });
       } else {
-        // Compare the provided password with the stored password hash
         const match = await comparePassword(password, user.password);
         if (match) {
-          // Create a session for the authenticated user
           req.session.user = user;
           req.session.save(() => {
-            req.session.reload(()=>{
+            req.session.reload(() => {
               res.json(req.session.user);
-            })
+            });
           });
         } else {
           res.json({ error: "Passwords do not match" });
@@ -335,17 +329,17 @@ const loginUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
 const getProfile = (req, res) => {
-  req.session.reload(()=>{
+  req.session.reload(() => {
     if (req.session.user) {
-    res.json(req.session.user);
-  } else {
-    res.json({hi:"hi"});
-  }
+      res.json(req.session.user);
+    } else {
+      res.json({ hi: "hi" });
+    }
   });
 };
 
@@ -374,6 +368,8 @@ const specificUser = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
+  const resetToken = uuidv4();
+  const resetExpiration = Date.now() + 3600000;
   await userModel
     .findOne({ email })
     .then((user) => {
@@ -382,17 +378,25 @@ const forgotPassword = async (req, res) => {
           error: "User not found",
         });
       } else {
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-          expiresIn: "1d",
-        });
+        req.session.reload(()=>{
+          req.session.user = {
+            resetPasswordToken: resetToken,
+            resetPasswordExpires: resetExpiration,
+          };
+          req.session.save();
+        })
+        const resetLink = `${process.env.FRONT_URL}/reset-password/${user._id}/${resetToken}`;
+
         let mailOptions = {
           from: process.env.AUTH_EMAIL,
           to: email,
           subject: "Reset Password",
-          text: `${process.env.BACK_URL}/reset-password/${user._id}/${token}`,
+          text: resetLink,
         };
 
-        transporter.sendMail(mailOptions);
+        transporter.sendMail(mailOptions).catch((err) => {
+          res.json({ error: "error in sending mail" });
+        });
       }
     })
     .then(() => {
@@ -401,24 +405,40 @@ const forgotPassword = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      res.json({
+        error: "An error occured in sending the email",
+      });
     });
 };
 
 const resetPassword = async (req, res) => {
   const { id, token } = req.params;
   const { password } = req.body;
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+
+  if (
+    req.session.user.resetPasswordToken !== token ||
+    Date.now() > req.session.user.resetPasswordExpires
+  ) {
+    return res.json({ Status: "Token error" });
+  }
+
+  bcrypt.hash(password, 10, (err, hash) => {
     if (err) {
-      return res.json({ Status: "Token error" });
-    } else {
-      bcrypt.hash(password, 10).then((hash) => {
-        userModel
-          .findByIdAndUpdate({ _id: id }, { password: hash })
-          .then(() => res.json({ Status: "Success" }))
-          .catch((err) => res.json({ Status: err }));
-      }).catch((err) => res.json({ Status: err }));
+      return res.json({ Status: err });
     }
+
+    userModel.findByIdAndUpdate(id, { password: hash }, (err) => {
+      if (err) {
+        return res.json({ Status: err });
+      }
+      delete req.session.user.resetPasswordToken;
+      delete req.session.user.resetPasswordExpires;
+      req.session.save(() => {
+        req.session.reload(req.session.user);
+      });
+
+      res.json({ Status: "Success" });
+    });
   });
 };
 

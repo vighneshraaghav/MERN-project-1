@@ -50,8 +50,9 @@ router.use(
     cookie: { secure: true,
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24 * 7,
-            sameSite: 'none',
+sameSite: 'none',
             },
+    callback: (req, res, next) => {},
   })
 );
 
