@@ -427,7 +427,7 @@ const resetPassword = async (req, res) => {
       return res.json({ Status: err });
     }
 
-    userModel.findByIdAndUpdate(id, { password: hash }, (err) => {
+    userModel.findByIdAndUpdate(id, { password: hash }).then((err) => {
       if (err) {
         return res.json({ Status: err });
       }
@@ -439,6 +439,7 @@ const resetPassword = async (req, res) => {
 
       res.json({ Status: "Success" });
     });
+
   });
 };
 
