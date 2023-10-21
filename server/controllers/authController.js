@@ -47,7 +47,7 @@ let transporter = nodeMailer.createTransport({
 //test success
 transporter.verify((error, success) => {
   if (error) {
-    console.log("hi", error);
+    console.log(error);
   } else {
     console.log("Ready for messages");
     console.log(success);
@@ -275,7 +275,6 @@ const verifiedPage = async (req, res) => {
     .findOne({ email })
     .then((user) => {
       if (user) {
-        console.log(user);
         res.json({ user });
       } else {
         res.json({
