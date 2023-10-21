@@ -14,7 +14,7 @@ function ForgotPwd() {
       const userData = await axios.post("/forgot-password", {
         email,
       });
-      console.log(userData);
+      //console.log(userData);
       if (userData.error) {
         toast.error(userData.error);
       } else {

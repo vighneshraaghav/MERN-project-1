@@ -17,7 +17,7 @@ function ResetPwd() {
       const userData = await axios.post(`/reset-password/${id}/${token}`, {
         password,
       });
-      console.log(userData);
+      //console.log(userData);
       if (userData.error) {
         toast.error(userData.error);
       } else {

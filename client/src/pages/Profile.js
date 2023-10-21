@@ -4,7 +4,7 @@ import axios from "axios";
 
 function Profile() {
   const { user } = useContext(UserContext);
-  console.log(user);
+  //console.log(user);
   const [role, setRole] = useState(null);
   useEffect(() => {
     if (user) {
@@ -20,7 +20,7 @@ function Profile() {
     }
   }, [user]);
   if (user && role) {
-    console.log(role);
+    //console.log(role);
     if (role === "admin") {
       return <Admin user={user} />;
     } else {

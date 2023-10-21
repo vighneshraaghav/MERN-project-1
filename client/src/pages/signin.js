@@ -41,7 +41,7 @@ function SignInPage() {
             email: '',
             password: '',
           });
-          console.log(userData);
+          //console.log(userData);
           dispatch(authActions.login());
           navigate('/profile')
       }
