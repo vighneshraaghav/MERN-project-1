@@ -72,8 +72,8 @@ function Admin(props) {
           Your mail ID : {user.email}
         </h1>
       </div>
-      <div className="rounded-xl border backdrop-blur p-2 mx-24">
-        <div className="grid grid-cols-2">
+      <div className="rounded-xl border backdrop-blur w-fit p-2 mx-24 mb-12">
+        <div className="grid grid-cols-2 relative">
           <h1 className="rounded-xl underline text-white p-2 m-2">Name</h1>
           <h1 className="rounded-xl underline text-white p-2 m-2">Registered Email</h1>
         </div>
