@@ -12,7 +12,7 @@ function Header() {
   return (
     <div className="px-2 py-4">
       <div className="flex flex-col sm:flex-row">
-        <p className="p-1 text-white text-center m-auto">The Conference 2023</p>
+        <p className="p-1 text-white text-center m-auto">Tech-23</p>
         <div className="flex mx-11 flex-wrap lg:space-x-20 justify-center sm:justify-start gap-2">
           <Elements name="Home" link="/" />
           <Elements name="Announcements" link="/announcements" />
