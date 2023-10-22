@@ -16,6 +16,7 @@ const {
   specificUser,
   forgotPassword,
   resetPassword,
+  deleteUser,
 } = require("../controllers/authController");
 
 const redisClient = redis.createClient(
@@ -67,5 +68,6 @@ router.get("/verify/:userId/:uniqueString", verifyEmail);
 router.get("/verified/:email", verifiedPage);
 router.post("/forgot-password",forgotPassword);
 router.post('/reset-password/:id/:token',resetPassword);
+router.post('/deleteUser',deleteUser);
 
 module.exports = router;

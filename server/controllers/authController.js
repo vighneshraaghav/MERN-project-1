@@ -332,6 +332,18 @@ const loginUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  const { _id } = req.body;
+  await userModel
+    .findByIdAndDelete({ _id })
+    .then((err) => {
+      if (err) {
+        return res.json({ err: err });
+      }
+      res.json({success:true})
+    });
+};
+
 const getProfile = (req, res) => {
   req.session.reload(() => {
     if (req.session.user) {
@@ -438,7 +450,6 @@ const resetPassword = async (req, res) => {
 
       res.json({ Status: "Success" });
     });
-
   });
 };
 
@@ -482,4 +493,5 @@ module.exports = {
   specificUser,
   forgotPassword,
   resetPassword,
+  deleteUser,
 };

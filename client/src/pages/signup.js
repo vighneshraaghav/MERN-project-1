@@ -1,51 +1,55 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
-
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import hiddenpwd from "../images/hiddenpwd.png";
+import viewpwd from "../images/viewpwd.png";
 
 function SignUpPage() {
   const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
   });
 
-  /////////////////
-  const navigate = useNavigate()
-  const [isValid, setIsValid] = useState(true)
+  const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(true);
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const handleEmailChange = (event) => {
-    const newEmail = event.target.value
-    setData({...data, email:newEmail})
+    const newEmail = event.target.value;
+    setData({ ...data, email: newEmail });
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    setIsValid(emailRegex.test(newEmail))
+    setIsValid(emailRegex.test(newEmail));
   };
   const handleUsernameChange = (event) => {
-    setData({...data, name:event.target.value})
+    setData({ ...data, name: event.target.value });
   };
 
   const handlePasswordChange = (event) => {
-    setData({...data, password:event.target.value})
+    setData({ ...data, password: event.target.value });
   };
-    ///////////////
 
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      const {name, email, password} = data
-    try { 
-      const {data} = await axios.post(
-      '/register',{name, email, password}) 
-      if(data.error){
-        toast.error(data.error)
-      }else{
+    e.preventDefault();
+    const { name, email, password } = data;
+    try {
+      const { data } = await axios.post("/register", { name, email, password });
+      if (data.error) {
+        toast.error(data.error);
+      } else {
         setData({});
-        navigate('/verification',{state:{email:email,password:password,}});
-        toast.success('Verification Email sent! Check your Email.');
+        navigate("/verification", {
+          state: { email: email, password: password },
+        });
+        toast.success("Verification Email sent! Check your Email.");
       }
     } catch (error) {
-      console.error('Error Signing up', error);
+      console.error("Error Signing up", error);
     }
   };
   return (
@@ -54,7 +58,10 @@ function SignUpPage() {
         <h2 className="text-2xl text-blue-300 font-semibold mb-4">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-white">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-white"
+            >
               Username
             </label>
             <input
@@ -67,7 +74,10 @@ function SignUpPage() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-white">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-white"
+            >
               Email
             </label>
             <input
@@ -79,29 +89,56 @@ function SignUpPage() {
               required
             />
             {!isValid && (
-            <p className="text-red-600 text-sm mt-1">Please enter a valid email address.</p>
-          )}
+              <p className="text-red-600 text-sm mt-1">
+                Please enter a valid email address.
+              </p>
+            )}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-white">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-white"
+            >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              value={data.password}
-              onChange={handlePasswordChange}
-              className="mt-1 p-2 w-full bg-transparent border text-white rounded-md focus:outline-none"
-              required
-            />
+            <div className="flex relative">
+              <input
+                type={passwordShown ? "text" : "password"}
+                id="password"
+                value={data.password}
+                onChange={handlePasswordChange}
+                className="mt-1 p-2 w-full bg-transparent border text-white rounded-md focus:outline-none"
+                required
+              />
+              <button
+                className="absolute p-1 right-0 mt-1 w-10 rounded-md bg-white"
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent the default behavior
+                  togglePassword();}}
+              >
+                {passwordShown ? (
+                  <img src={viewpwd} alt="Show Password" />
+                ) : (
+                  <img src={hiddenpwd} alt="Hide Password" />
+                )}
+              </button>
+            </div>
           </div>
           <button
-            type='submit'
+            type="submit"
             className="w-full mb-4 bg-transparent text-white p-2 mt-6 rounded-md hover:bg-blue-300 hover:text-black focus:outline-none focus:ring border"
           >
             Sign Up
           </button>
-          <p className="block text-center text-sm font-medium text-white">Already a user?<button className='ml-1 text-blue-300' onClick={()=>navigate('/signin')}>Sign In</button></p>
+          <p className="block text-center text-sm font-medium text-white">
+            Already a user?
+            <button
+              className="ml-1 text-blue-300"
+              onClick={() => navigate("/signin")}
+            >
+              Sign In
+            </button>
+          </p>
         </form>
       </div>
     </div>

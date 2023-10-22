@@ -22,9 +22,9 @@ function Verified() {
   return (
     <div>
       {data ? (
-        <p>{data.error ? data.error : data.success}</p>
+        <p className="text-white m-8">{data.error ? data.error : data.success}</p>
       ) : (
-        <p>Loading...</p>
+        <p className="text-white m-8">Loading...</p>
       )}
     </div>
   );

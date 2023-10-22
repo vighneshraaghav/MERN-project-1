@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
+import toast from "react-hot-toast";
+import trash from "../images/trash.png";
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -12,7 +14,7 @@ function Profile() {
         await axios
           .get(`/specificUser/${user.email}`)
           .then((deets) => {
-            setRole(deets.data.userType)
+            setRole(deets.data.userType);
           })
           .catch(console.log("Loading user information"));
       };
@@ -60,7 +62,20 @@ function Admin(props) {
         });
     }
     getUsers();
-  }, []);
+  }, [users]);
+
+  const deleteUser = async (_id) => {
+    try {
+      const del = await axios.post("/deleteUser", { _id });
+      if (del.error) {
+        toast.error("Unable to delete User");
+      } else {
+        toast.success("User deleted Successfully");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -72,17 +87,30 @@ function Admin(props) {
           Your mail ID : {user.email}
         </h1>
       </div>
-      <div className="rounded-xl border backdrop-blur w-fit p-2 mx-24 mb-12">
-        <div className="grid grid-cols-2 relative">
-          <h1 className="rounded-xl underline text-white p-2 m-2">Name</h1>
-          <h1 className="rounded-xl underline text-white p-2 m-2">Registered Email</h1>
-        </div>
-        {users.map((member) => (
-          <div className="grid grid-cols-2">
-            <h1 className="rounded-xl text-white p-2 m-2">{member.name}</h1>
-            <h1 className="rounded-xl text-white p-2 m-2">{member.email}</h1>
+      <div className="flex justify-center">
+        <div className="w-full max-w-lg p-6 border backdrop-blur rounded-lg shadow-md">
+          <div className="grid grid-cols-3">
+            <h1 className="rounded-xl underline text-white p-2 m-2">Name</h1>
+            <h1 className="rounded-xl underline text-white p-2 m-2">
+              Registered Email
+            </h1>
+            <h1 className="rounded-xl underline justify-self-end text-white p-2 m-2">
+              Delete
+            </h1>
           </div>
-        ))}
+          {users.map((member, index) => (
+            <div className="grid grid-cols-3" key={index}>
+              <h1 className="rounded-xl text-white p-2 m-2">{member.name}</h1>
+              <h1 className="rounded-xl text-white p-2 m-2">{member.email}</h1>
+              <button
+                className="p-2 m-2 justify-self-end"
+                onClick={() => deleteUser(member._id)}
+              >
+                <img src={trash} alt="delete" />
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

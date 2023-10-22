@@ -64,7 +64,7 @@ const Verification = () => {
       } else {
         return (
           <div>
-            <h1>Verification mail sent for {creds.email}</h1>
+            <h1 className="text-white">Verification mail sent for {creds.email}</h1>
           </div>
         );
       }
@@ -74,7 +74,7 @@ const Verification = () => {
   } else {
     return (
       <div>
-        <h1>This page is not accessible..!</h1>
+        <h1 className="text-white">This page is not accessible..!</h1>
       </div>
     );
   }
