@@ -4,7 +4,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import trash from "../images/trash.png";
 import EventRegister from "../components/eventRegister";
-import EventProfile from "./eventProfile";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
