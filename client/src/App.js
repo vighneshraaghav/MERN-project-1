@@ -17,6 +17,8 @@ import ForgotPwd from "./pages/forgotPwd";
 import ResetPwd from "./pages/resetPwd";
 import background from "./images/bg.jpg";
 import ProtectedReverse from "./protected/ProtectedReverse";
+import Registration from "./pages/registration";
+import EventProfile from "./pages/eventProfile";
 
 axios.defaults.baseURL = process.env.REACT_APP_BACK_URL;
 axios.defaults.withCredentials = true;
@@ -41,15 +43,17 @@ function App() {
           <Route path="programme" element={<Programme />} />
           <Route element={<ProtectedRoutes />}>
             <Route path="profile" element={<Profile />} />
+            <Route path="profile/registration" element={<Registration />} />
+            <Route path="profile/eventprofile" element={<EventProfile/>} />
           </Route>
           <Route
             path="/verifyUser/:userId/:uniqueString"
             element={<Verified />}
           />
           <Route path="verification" element={<Verification />} />
-          <Route element={<ProtectedReverse/>}>
-          <Route path="signin" element={<SignInPage />} />
-          <Route path="signup" element={<SignUpPage />} />
+          <Route element={<ProtectedReverse />}>
+            <Route path="signin" element={<SignInPage />} />
+            <Route path="signup" element={<SignUpPage />} />
           </Route>
           <Route path="forgot-password" element={<ForgotPwd />} />
           <Route path="/reset-password/:id/:token" element={<ResetPwd />} />
