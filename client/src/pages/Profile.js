@@ -157,7 +157,7 @@ function Admin(props) {
             </h1>
           </div>
           {users.map((member, index) => (
-            <button onClick={()=>navigate("/profile/eventprofile")} className="grid rounded-md hover:bg-blue-600 grid-cols-3" key={index}>
+            <div onClick={()=>navigate("/profile/eventprofile",{state:{user:member}})} className="grid rounded-md hover:bg-blue-600 grid-cols-3" key={index}>
               <h1 className="justify-self-start rounded-xl text-white p-2 m-2">{member.name}</h1>
               <h1 className="justify-self-start rounded-xl text-white p-2 m-2">{member.email}</h1>
               <button
@@ -166,7 +166,7 @@ function Admin(props) {
               >
                 <img src={trash} alt="delete" />
               </button>
-            </button>
+            </div>
           ))}
         </div>
       </div>
